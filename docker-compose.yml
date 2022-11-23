@@ -1,0 +1,13 @@
+version: "3.6"
+
+services:
+  gem:
+    build: .
+    image: build_gem
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - .:/usr/src/app
+    restart: unless-stopped
+    env_file:
+      - .env
