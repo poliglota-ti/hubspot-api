@@ -12,5 +12,5 @@ group :development, :test do
 end
 
 gem 'httparty'
-gem "json", "~> 1.8.6"
+gem "json", "~> 2.6.2"
 
