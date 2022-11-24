@@ -218,4 +218,8 @@ RSpec.describe Hubspot::BuildRequest do
     end
   end
 
+  describe 'create propities' do
+    
+  end
+
 end
