@@ -1,5 +1,5 @@
 ## Poli Hubspot
-This gem was created to solve the problem of Hubspot connection, because we have multiple services that share logic with this connection.
+This gem was created to solve the problem of Hubspot connection, because we have multiple legacies services that share logic with this connection.
 
 ## Installation
 
