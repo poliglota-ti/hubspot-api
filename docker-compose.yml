@@ -4,6 +4,7 @@ services:
   gem:
     build: .
     image: build_gem
+    container_name: hubsport-api-gem
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     volumes:
