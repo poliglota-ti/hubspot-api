@@ -30,18 +30,23 @@ module Hubspot
     def self.update_deal(params={}, id)
       raise "params cant be empty or nil" if params.empty? || params.nil?
       url = base_v3_url+deals_url+"/#{id}"
-      update(url, params)
+      patch(url, params)
     end
 
     def self.create_association(params={})
       raise "params cant be empty or nil" if params.empty? || params.nil?
-      url = base_v4_url+
+      url = base_v3_url+association_url(params)
+      update(url)
     end
     
     private
 
-      def self.update(url, params)
+      def self.patch(url, params)
         HTTParty.patch(url, body: params.to_json, headers: set_header)
+      end
+
+      def self.update(url)
+        HTTParty.put(url, headers: set_header)
       end
       
       def self.post(url, params)
@@ -66,13 +71,12 @@ module Hubspot
         Hubspot::URLS[:deals]
       end
       def self.association_url(params)
-        new_url = ''
         arr_url = Hubspot::URLS[:association_contact_deal].split("/")
 
-        arr_url.map do |key|
-          params[word.to_sym].nil? ? params[word.to_sym] : key
+        new_url = arr_url.map do |word|
+          params[word.to_sym].nil? ? word : params[word.to_sym]
         end
-        
+        new_url.join("/")
       end
       
       def self.set_header
