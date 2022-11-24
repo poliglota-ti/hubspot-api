@@ -203,17 +203,18 @@ RSpec.describe Hubspot::BuildRequest do
         }
       }
     }
-    let(:send_params){
-      "contactId": params_contact["id"],
-      "toObjectType": "Deal",
-      "toObjectId": params_deal["id"]
-
-    }
     let(:new_deal){Hubspot::BuildRequest.create_deal(params_deal)}
     let(:contact){Hubspot::BuildRequest.create_user(params_contact)}
+    let(:send_params){
+      {
+        "contactId": contact["id"],
+        "toObjectType": "Deal",
+        "toObjectId": new_deal["id"]
+      }
+    }
     
-    it '' do
-      
+    it 'create association' do
+      expect(Hubspot::BuildRequest.create_association(send_params).keys.include?("id")).to eq(true)
     end
   end
 
