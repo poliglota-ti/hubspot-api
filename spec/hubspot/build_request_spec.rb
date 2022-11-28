@@ -218,8 +218,46 @@ RSpec.describe Hubspot::BuildRequest do
     end
   end
 
-  describe 'create propities' do
-    
+  describe 'Properties' do
+    context 'dont found property' do
+      let(:params) { 
+        {
+          objectType: 'Deal',
+          propertyName: 'not_exist'
+        }
+       }
+      it 'return status error' do
+        expect(Hubspot::BuildRequest.search_property_by_name(params)["status"]).to eq("error")
+
+      end
+    end
+    context 'found property' do
+      let(:params) { 
+        {
+          objectType: 'Deal',
+          propertyName: 'installment_1'
+        }
+      }
+      it 'found property' do
+        expect(Hubspot::BuildRequest.search_property_by_name(params).keys.include?("name")).to eq(true)
+      end
+    end
+
+    context 'create property' do
+      let(:params){
+        {
+          name: Faker::Name.name.downcase.split(" ").join("_"),
+          label: "Cuota 1",
+          type: "string",
+          fieldType: "text",
+          groupName: "dealinformation",
+          hidden: false
+        }
+      }
+      it 'success' do
+        expect(Hubspot::BuildRequest.create_property(params).keys.include?("name")).to eq(true)
+      end
+    end
   end
 
 end
