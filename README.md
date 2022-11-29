@@ -6,7 +6,7 @@ This gem was created to solve the problem of Hubspot connection, because we have
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'hubspot', git: 'https://github.com/poliglota-ti/hubspot-api', branch: 'main'
+gem 'hubspot-api', git: 'https://github.com/poliglota-ti/hubspot-api', branch: 'main'
 ```
 
 And then execute:
