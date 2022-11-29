@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "hubspot/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "hubpost-api"
+  spec.name          = "hubspot-api"
   spec.version       = Hubspot::VERSION
   spec.authors       = ["Dinko Azema"]
   spec.email         = ["dinko.azema@poliglota.org"]
