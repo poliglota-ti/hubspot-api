@@ -108,7 +108,7 @@ RSpec.describe Hubspot::BuildRequest do
     end
   end
 
-  describe 'create and update deals' do
+  describe 'find, create and update deals' do
     context 'error create' do
       let(:bad_params){
         {
@@ -145,7 +145,7 @@ RSpec.describe Hubspot::BuildRequest do
       end
     end
 
-    context 'update' do
+    context 'update and find' do
       let(:good_params){
         {
           "properties": {
@@ -171,6 +171,14 @@ RSpec.describe Hubspot::BuildRequest do
       it 'update stage' do
         id = new_deal["id"]
         expect(Hubspot::BuildRequest.update_deal(new_stage_params, id)["properties"]["dealstage"]).to eq(new_stage_params[:properties][:dealstage].to_s)
+      end
+
+      it 'find deal by id' do
+        expect(Hubspot::BuildRequest.get_deal_by_id(new_deal["id"])["id"]).to eq(new_deal["id"])
+      end
+
+      it 'not found by id' do
+        expect(Hubspot::BuildRequest.get_deal_by_id("1231231231232").code).to eq(404)
       end
       
     end
@@ -231,7 +239,7 @@ RSpec.describe Hubspot::BuildRequest do
 
       end
     end
-    context 'found property' do
+    context 'found property by name' do
       let(:params) { 
         {
           objectType: 'Deal',
