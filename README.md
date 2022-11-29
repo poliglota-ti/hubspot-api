@@ -13,9 +13,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install hubspot
 
 ## For Develop Enviropment
 First install docker and docker compose and
@@ -52,7 +49,7 @@ add the folow code to the file.
 require 'hubspot'
 
 Hubspot::Settings.configure do |config|
-  config.key = Rails.env.production? ? 'production key' : 'development key'
+  config.private_key = Rails.env.production? ? 'production key' : 'development key'
 end
 ```
 
