@@ -49,7 +49,9 @@ config/initializers/hubspot.rb
 ```
 add the folow code to the file.
 ```ruby
-Hubspot::Setting.configure do |config|
+require 'hubspot'
+
+Hubspot::Settings.configure do |config|
   config.key = Rails.env.production? ? 'production key' : 'development key'
 end
 ```
