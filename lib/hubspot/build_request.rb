@@ -54,6 +54,12 @@ module Hubspot
       url = base_v3_url+property_url
       post(url, params)
     end
+
+    def self.update_contact(params, id)
+      raise "params cant be empty or nil" if params.empty? || params.nil?
+      url = base_v3_url+contact_url+"/#{id}"
+      patch(url, params)
+    end
       
     private
 

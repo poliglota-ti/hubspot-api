@@ -88,7 +88,7 @@ RSpec.describe Hubspot::BuildRequest do
       end
     end
 
-    context "when send god params" do
+    context "when send god params, create and update" do
       let(:good_params){
         {"properties": {
           "email": Faker::Internet.email,
@@ -100,11 +100,22 @@ RSpec.describe Hubspot::BuildRequest do
           "country": "MX"
         }}
       }
+      let(:update_params){
+        {"properties": {
+          "email": Faker::Internet.email
+        }}
+      }
+      let(:contact){Hubspot::BuildRequest.create_user(good_params)}
 
       it 'create user and return email' do
-        res = Hubspot::BuildRequest.create_user(good_params)
-        expect(res["properties"]["email"]).to eq(good_params[:properties][:email])
+        expect(contact["properties"]["email"]).to eq(good_params[:properties][:email])
       end
+
+      it 'update properties of contact' do
+        puts update_params[:properties][:email]
+        expect(Hubspot::BuildRequest.update_contact(update_params, contact["id"])["properties"]["email"]).to eq(update_params[:properties][:email])
+      end
+
     end
   end
 
@@ -263,7 +274,8 @@ RSpec.describe Hubspot::BuildRequest do
         }
       }
       it 'success' do
-        expect(Hubspot::BuildRequest.create_property(params).keys.include?("name")).to eq(true)
+        res = Hubspot::BuildRequest.create_property(params)
+        expect(res.keys.include?("name")).to eq(true)
       end
     end
   end
