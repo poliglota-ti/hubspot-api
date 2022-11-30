@@ -6,7 +6,9 @@ module Hubspot
             contact: 'objects/contacts',
             deals: 'objects/deals',
             association_contact_deal: 'objects/contacts/contactId/associations/toObjectType/toObjectId/contact_to_deal',
+            association_deal_contact:'objects/deals/dealId/associations/toObjectType',
             properties: 'properties/objectType/propertyName',
-            property:'properties/Deal'
+            property:'properties/Deal',
+            owners:'owners'
           }.freeze
 end
