@@ -112,7 +112,6 @@ RSpec.describe Hubspot::BuildRequest do
       end
 
       it 'update properties of contact' do
-        puts update_params[:properties][:email]
         expect(Hubspot::BuildRequest.update_contact(update_params, contact["id"])["properties"]["email"]).to eq(update_params[:properties][:email])
       end
 
@@ -231,11 +230,41 @@ RSpec.describe Hubspot::BuildRequest do
         "toObjectId": new_deal["id"]
       }
     }
+    let(:association){Hubspot::BuildRequest.create_association(send_params)}
     
     it 'create association' do
-      expect(Hubspot::BuildRequest.create_association(send_params).keys.include?("id")).to eq(true)
+      expect(association.keys.include?("id")).to eq(true)
+    end
+
+    it 'find owner' do
+      expect(Hubspot::BuildRequest.find_owner("270459245")["id"]).to eq("270459245")
+    end
+
+    it 'error find owner' do
+      expect(Hubspot::BuildRequest.find_owner("2704592245").code).to eq(400)
     end
   end
+
+  describe 'association (deal -> contact) get contact info by deal id' do
+    context "find contact" do
+      let(:params){
+        {
+          dealId:"11145470811",
+          toObjectType: "Contact"
+        }
+      }
+      let(:association){Hubspot::BuildRequest.get_contact_info_by_association_with_deal(params)}
+      
+      it 'should get email of contacto' do
+        expect(association["results"].first["toObjectId"]).to eq(27851)
+      end
+
+      it 'should return user info' do
+        expect(Hubspot::BuildRequest.get_contact_by_id(association["results"].first["toObjectId"]).keys.include?("id")).to eq(true)
+      end
+    end
+  end
+
 
   describe 'Properties' do
     context 'dont found property' do
