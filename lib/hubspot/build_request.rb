@@ -17,6 +17,19 @@ module Hubspot
       get(url)
     end
 
+    def self.get_contact_info_by_association_with_deal(params)
+      raise "params cant be empty or nil" if params.empty? || params.nil?
+      url = base_v4_url+set_url(params, "association_deal_contact")
+      get(url)
+      
+    end
+
+    def self.get_contact_by_id(id)
+      raise "id cant be empty or nil" if id.nil?
+      url = base_v3_url+contact_url+"/#{id}?properties=firstname&properties=lastname&properties=b2c_country_code&properties=hs_timezone"
+      get(url)
+    end
+
     def self.create_user(params={})
       raise "params cant be empty or nil" if params.empty? || params.nil?
       raise "need params properties" unless params.keys.include?(:properties)
@@ -60,6 +73,12 @@ module Hubspot
       url = base_v3_url+contact_url+"/#{id}"
       patch(url, params)
     end
+
+    def self.find_owner(id)
+      raise "id cant be empty or nil" if id.empty? || id.nil?
+      url = base_v3_url+owners_url+"/#{id}"+"?idProperty=id&archived=false"
+      get(url)
+    end
       
     private
 
@@ -98,6 +117,10 @@ module Hubspot
       end
       def self.property_url
         Hubspot::URLS[:property]
+      end
+
+      def self.owners_url
+        Hubspot::URLS[:owners]
       end
 
       def self.set_url(params, set_url)
