@@ -26,7 +26,7 @@ module Hubspot
 
     def self.get_contact_by_id(id)
       raise "id cant be empty or nil" if id.nil?
-      url = base_v3_url+contact_url+"/#{id}?properties=firstname&properties=lastname&properties=b2c_country_code&properties=hs_timezone"
+      url = base_v3_url+contact_url+"/#{id}?properties=firstname&properties=lastname&properties=b2c_country_code&properties=hs_timezone&properties=email"
       get(url)
     end
 

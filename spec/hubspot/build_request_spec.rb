@@ -259,7 +259,7 @@ RSpec.describe Hubspot::BuildRequest do
         expect(association["results"].first["toObjectId"]).to eq(27851)
       end
 
-      it 'should return user info' do
+      it 'should return user info include email' do
         expect(Hubspot::BuildRequest.get_contact_by_id(association["results"].first["toObjectId"]).keys.include?("id")).to eq(true)
       end
     end
